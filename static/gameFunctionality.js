@@ -1,7 +1,16 @@
 let playerScore = 0;
 let computerScore = 0;
 
-// Just created this object for testing!
+let gameBtns = document.querySelectorAll('button');
+
+let result = document.getElementById('finalResult');
+let score = document.getElementById('score');
+let message = document.getElementById('message');
+
+// Add events for each button, once the player cicks any of them you should run the game function.
+gameBtns.forEach(button => button.addEventListener('click', game));
+
+
 let gameResults = {
     "Rock": {
         win: "You win!, Rock crushes Scissors.",
@@ -60,22 +69,13 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        const computerDecision = computerPlay();
-        const playerDecision = prompt("Enter 'Rock', 'Paper' or 'Scissors', good luck!");
+function game(e) {
+    message.textContent = playRound(e.target.textContent, computerPlay());
+    score.textContent = `Your Score ${playerScore} - ${computerScore} Machine Score`
 
-        console.log(playRound(playerDecision, computerDecision));
-    }
-
-    // Final result of the round.
-    if (playerScore > computerScore) {
-        console.log("You've won!");
-    } else if (playerScore < computerScore) {
-        console.log("You've lost!");
-    } else {
-        console.log("Draw.");
+    if (playerScore >= 5 && result.textContent === '') {
+        result.textContent = `Congratulations, you've WON!`;
+    } else if (computerScore >= 5 && result.textContent === '') {
+        result.textContent = `Sorry, you've lost.`;
     }
 }
-
-game();
