@@ -7,17 +7,39 @@
     
     <title>Rock, Paper & Scissors: The game</title>
     <script src="static/gameFunctionality.js" defer></script>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
     <main>
-        <button type="button" class="gameBtn">Rock</button>
-        <button type="button" class="gameBtn">Paper</button>
-        <button type="button" class="gameBtn">Scissors</button>
+        <h1>Rock, Paper, Scissors.<br>
+            The Game.</h1>
+        <div class="flex">
+            <button type="button" class="gameBtn"><img src="images/rock.png" id="rock" width="100%" height="auto"></button>
+            <button type="button" class="gameBtn"><img src="images/paper.png" id="paper" width="100%" height="auto"></button>
+            <button type="button" class="gameBtn"><img src="images/scissors.png" id="scissors" width="100%" height="auto"></button>
+        </div>
+        <div class="medium-text" id='results'>
+            <p class="bold" id="scoreboard">
+                You &nbsp;<span class="scoreboard">0 - 0</span> &nbsp;PC
+            </p>
+            <p id="message"></p>
+            <button type="button" class="bold" id="restart" hidden>RESTART GAME</button>
+        </div>
 
-        <div id='results'>
-            <p id="finalResult"></p>
-            <p id='score'></p>
-            <p id='message'></p>
+        <div class="min-w" id="instructions">
+            <h2>Instructions:</h2>
+            <p class="l-txt medium-text">
+                In <span class="bold">rock-paper-scissors</span>, you have to randomly choose one of the three images above that represents: <span class="bold">rock, paper</span> and <span class="bold">scissors</span> respectively, you are going to play against the machine.
+            </p>
+            <p class="l-txt medium-text">
+                Here are the rules that determine which sign beats another:
+            </p>
+            <ol class="medium-text">
+                <li class="l-txt">Rock wins over scissors.</li>
+                <li class="l-txt">Paper wins over rock.</li>
+                <li class="l-txt">Scissors wins over paper.</li>
+            </ol>
+            <h3>FIRST TO 5 WINS!</h3>
         </div>
     </main>
 </body>
