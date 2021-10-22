@@ -1,34 +1,34 @@
 let playerScore = 0;
 let computerScore = 0;
 
-let gameBtns = document.querySelectorAll('button');
+let gameBtns = document.querySelectorAll('.gameBtn');
+let restartBtn = document.getElementById('restart');
 
-let result = document.getElementById('finalResult');
-let score = document.getElementById('score');
+let scoreboard = document.getElementById('scoreboard');
 let message = document.getElementById('message');
 
 // Add events for each button, once the player cicks any of them you should run the game function.
 gameBtns.forEach(button => button.addEventListener('click', game));
 
+restartBtn.addEventListener('click', restartGame);
 
 let gameResults = {
     "Rock": {
         win: "You win!, Rock crushes Scissors.",
         lose: "You lose!, the Rock gets covered by Paper.",
     },
-    "Scissors": {
-        win: "You win!, Paper gets cut by the Scissors.",
-        lose: "You lose!, Scissors are not that strong for a Rock.",
-    },
     "Paper": {
         win: "You win!, the Paper covers the Rock.",
         lose: "You lose!, Paper gets easily cut by the Scissors."
+    },
+    "Scissors": {
+        win: "You win!, Paper gets cut by the Scissors.",
+        lose: "You lose!, Scissors are not that strong for a Rock.",
     },
     "Tie": "This is a tie!"
     }
 
 function computerPlay() {
-    // Returns a number between 1 and 3, didn't included a break statement cause we are using return.
     switch (Math.floor(Math.random() * (4 - 1) + 1)) {
         case 1:
             return "rock";
@@ -70,12 +70,34 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game(e) {
-    message.textContent = playRound(e.target.textContent, computerPlay());
-    score.textContent = `Your Score ${playerScore} - ${computerScore} Machine Score`
-
-    if (playerScore >= 5 && result.textContent === '') {
-        result.textContent = `Congratulations, you've WON!`;
-    } else if (computerScore >= 5 && result.textContent === '') {
-        result.textContent = `Sorry, you've lost.`;
+    // Plays a round only till one of the players reaches 5 points.
+    if (playerScore < 5 && computerScore < 5) {
+        message.textContent = playRound(e.target.id, computerPlay());
+        scoreboard.firstElementChild.textContent = `${playerScore} - ${computerScore}`;
     }
+
+    if (playerScore >= 5) {
+        message.classList.add('bold');
+        message.textContent = `Congratulations, you've WON!`;
+        restartBtn.hidden = false;
+    } else if (computerScore >= 5) {
+        message.classList.add('bold');
+        message.textContent = `Sorry, you've LOST the entire game.`;
+        restartBtn.hidden = false;
+
+        gameBtns.forEach(button => button.removeEventListener('click', game));
+    }
+}
+
+function restartGame() {
+    playerScore = 0;
+    computerScore = 0;
+
+    message.classList.remove('bold');
+    message.textContent = ``;
+
+    scoreboard.firstElementChild.textContent = `${playerScore} - ${computerScore}`;
+
+    restartBtn.hidden = true;
+    gameBtns.forEach(button => button.addEventListener('click', game));
 }
